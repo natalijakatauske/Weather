@@ -59,7 +59,7 @@ function showWeatherInDom(data) {
         card.style.textAlign = 'center'
         document.body.appendChild(card)
         const cityName = document.createElement('h2')
-        cityName.innerText = data.city.name.toUpperCase()
+        cityName.innerText = data.city.name.toUpperCase() + ' / ' + data.city.country.toUpperCase()
         card.append(cityName)
             for (let i=0; i < data.list.length; i++) {
                 const oneDay = document.createElement('div')
@@ -69,9 +69,10 @@ function showWeatherInDom(data) {
                 oneDay.style.marginBottom = '20px'
                 oneDay.style.display = 'inline-flex'
                 oneDay.style.padding = '20px'
+                oneDay.style.width = '30%'
                 oneDay.style.backgroundColor = 'floralwhite'
                 card.append(oneDay)
-                const timeInfo = document.createElement('div')
+                const timeInfo = document.createElement('h4')
                 timeInfo.innerText = data.list[i].dt_txt + "\n"
                 oneDay.append(timeInfo)
                 for (let j=0; j < data.list[i].weather.length; j++) {
@@ -86,11 +87,23 @@ function showWeatherInDom(data) {
                     oneDay.append(weatherPicture)
                     weatherPicture.append(weatherImg, weatherDescription)
                 }
-                const temperaturaMax = document.createElement('h1')
-                temperaturaMax.innerText = Math.round(data.list[i].main.temp_max) + '°C'
-                const temperaturaMin = document.createElement('div')
-                temperaturaMin.innerText = 'Minimali temperatūra ' + Math.round(data.list[i].main.temp_min) + '°C'
-                oneDay.append(temperaturaMax, temperaturaMin)
+                const temperaturaNow = document.createElement('h1')
+                temperaturaNow.innerText = Math.round(data.list[i].main.temp) + ' °C'
+                temperaturaNow.style.marginRight = '10px'
+                const rightSideInfo = document.createElement('div')
+                rightSideInfo.style.paddingTop = '15px'
+                oneDay.append(temperaturaNow, rightSideInfo)
+                const temperaturaFeelsLike = document.createElement('div')
+                temperaturaFeelsLike.innerText = 'Jutiminė temperatūra ' + Math.round(data.list[i].main.feels_like) + '°C'
+                const humidity = document.createElement('div')
+                humidity.innerText = 'Drėgnumas ' + data.list[i].main.humidity + ' %'
+                const pressure = document.createElement('div')
+                pressure.innerText = 'Slėgis ' + data.list[i].main.pressure + ' Pa'
+                const temperatureMax = document.createElement('div')
+                temperatureMax.innerText = 'Maksimali temp. ' + Math.round(data.list[i].main.temp_max) + ' °C'
+                const temperatureMin = document.createElement('div')
+                temperatureMin.innerText = 'Minimali temp. ' + Math.round(data.list[i].main.temp_min) + ' °C'
+                rightSideInfo.append(temperaturaFeelsLike, humidity, pressure, temperatureMax, temperatureMin)
     }
             
         
