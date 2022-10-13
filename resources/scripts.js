@@ -75,6 +75,7 @@ function showWeatherInDom(data) {
                 timeInfo.innerText = data.list[i].dt_txt + "\n"
                 oneDay.append(timeInfo)
                 for (let j=0; j < data.list[i].weather.length; j++) {
+                    const weatherPicture = document.createElement('div')
                     const weatherICon = data.list[i].weather[j].icon
                     const weatherIConUrl = 'http://openweathermap.org/img/wn/' + weatherICon + '@2x.png' 
                     const weatherImg = document.createElement('img')
@@ -82,12 +83,13 @@ function showWeatherInDom(data) {
                     // weatherImg.width = '200px'
                     const weatherDescription = document.createElement('div')
                     weatherDescription.innerText = data.list[i].weather[j].description
-                    oneDay.append(weatherImg, weatherDescription)
+                    oneDay.append(weatherPicture)
+                    weatherPicture.append(weatherImg, weatherDescription)
                 }
-                const temperaturaMax = document.createElement('div')
-                temperaturaMax.innerText = 'Temperatūra yra ' + Math.round(data.list[i].main.temp_max)
+                const temperaturaMax = document.createElement('h1')
+                temperaturaMax.innerText = Math.round(data.list[i].main.temp_max) + '°C'
                 const temperaturaMin = document.createElement('div')
-                temperaturaMin.innerText = 'Minimali temperatūra ' + Math.round(data.list[i].main.temp_min)
+                temperaturaMin.innerText = 'Minimali temperatūra ' + Math.round(data.list[i].main.temp_min) + '°C'
                 oneDay.append(temperaturaMax, temperaturaMin)
     }
             
